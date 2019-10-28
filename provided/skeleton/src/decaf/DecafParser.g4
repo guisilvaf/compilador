@@ -10,21 +10,20 @@ options
   tokenVocab=DecafLexer;
 }
 
-type_id: type ID;
+type_id: type ID (COMMA ID)*;
 type_id2: type? ID;
 
 program : CLASSE LCURLY fild_declaration* method_declaration* RCURLY EOF;
 
-fild_declaration : (type ID | type_id COLE int_literal COLD) (COMMA type_id2 | COMMA type_id2 COLE int_literal COLD)* SEMICOLON;
+fild_declaration : (type_id | type_id COLE int_literal COLD) (COMMA type_id2 | COMMA type_id2 COLE int_literal COLD)* SEMICOLON;
 
-method_declaration : (type | VOID) ID LPAR ((type_id | type_id COLE int_literal COLD) (COMMA type_id2 | COMMA type_id2 COLE int_literal COLD)*)* RPAR block;
+method_declaration : (type | VOID) ID LPAR (type_id(COMMA type_id | type_id COLE int_literal COLD) (COMMA type_id2 | COMMA type_id2 COLE int_literal COLD)*)* RPAR block;
 
 block : LCURLY var_declaration* statment* RCURLY ;
 
-var_declaration : type ID (COMMA type? ID)* SEMICOLON; 
+var_declaration : type_id (COMMA ID)* SEMICOLON; 
 
 type : INT | BOOLEAN;
-
 
 statment : location assign_op expr SEMICOLON
 	| method_call SEMICOLON

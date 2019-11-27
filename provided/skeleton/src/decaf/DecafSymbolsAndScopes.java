@@ -39,6 +39,14 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 				System.exit(0);
 			}
 		}catch(Exception e){}
+
+		try {
+			int var = Integer.parseInt(ctx.location().expr().getText());
+			if (!this.varlist.contains(var)) {
+				this.error(ctx.location().ID().getSymbol(), "bad type, rhs should be an int");
+				System.exit(0);
+			}
+		} catch(Exception e){ }
 	}
 
     @Override
